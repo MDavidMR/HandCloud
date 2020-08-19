@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandCloud.Repository", "HandCloud.Repository\HandCloud.Repository.csproj", "{8F82A0AE-E026-4A13-84D5-B7C967EBD1C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandCloud.Domain", "HandCloud.Domain\HandCloud.Domain.csproj", "{9831D978-7125-4CCB-9746-8554AF584EFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandCloud.WebApp", "HandCloud.WebApp\HandCloud.WebApp.csproj", "{0BA99F85-D0B2-46CB-8A89-EB89AC96905A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F82A0AE-E026-4A13-84D5-B7C967EBD1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F82A0AE-E026-4A13-84D5-B7C967EBD1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F82A0AE-E026-4A13-84D5-B7C967EBD1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F82A0AE-E026-4A13-84D5-B7C967EBD1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9831D978-7125-4CCB-9746-8554AF584EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9831D978-7125-4CCB-9746-8554AF584EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9831D978-7125-4CCB-9746-8554AF584EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9831D978-7125-4CCB-9746-8554AF584EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA99F85-D0B2-46CB-8A89-EB89AC96905A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA99F85-D0B2-46CB-8A89-EB89AC96905A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA99F85-D0B2-46CB-8A89-EB89AC96905A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA99F85-D0B2-46CB-8A89-EB89AC96905A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54682302-9E49-4EFF-A316-C6C93A04EE53}
+	EndGlobalSection
+EndGlobal
