@@ -22,6 +22,8 @@ namespace HandCloud.Repository
             if (carList == null)
                 carList = new List<Car>();
 
+            car.Id = carList.Count > 0 ? carList.Max(i => i.Id) + 1 : 1;
+
             carList.Add(car);
 
             _jsonHelper.SaveData(carList);
@@ -41,7 +43,7 @@ namespace HandCloud.Repository
         public void Remove(int id)
         {
             var carList = _jsonHelper.GetData<Car>();
-            
+
             if (carList == null)
                 return;
 
@@ -52,7 +54,21 @@ namespace HandCloud.Repository
 
         public void Update(Car car)
         {
-            
+            var carList = _jsonHelper.GetData<Car>();
+
+            if (carList == null)
+                return;
+
+            var car1 = carList.Where(i => i.Id.Equals(car.Id)).First();
+
+            car1.Brand = car.Brand;
+            car1.Description = car.Description;
+            car1.Kilometers = car.Kilometers;
+            car1.Model = car.Model;
+            car1.Price = car.Price;
+            car1.Year = car.Year;
+
+            _jsonHelper.SaveData(carList);
         }
     }
 }

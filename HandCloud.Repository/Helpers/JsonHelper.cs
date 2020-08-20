@@ -37,7 +37,7 @@ namespace HandCloud.Repository.Helpers
 
         public void SaveData<T>(T data)
         {
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(data, Formatting.None);
             File.WriteAllText(_path, json);
         }
     }

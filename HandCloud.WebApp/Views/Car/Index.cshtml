@@ -4,12 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cars</h1>
+
+<div class="modal fade" id="modalEditForm" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <button type="button" data-action="create" class="btn btn-success" data-toggle="modal" data-target="#modalEditForm" onclick="performAction(this)">Create</button>
 </p>
-<table class="table">
+
+
+<table id="cars-table" class="table">
     <thead>
         <tr>
             <th hidden>
@@ -37,35 +54,71 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kilometers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
     </tbody>
 </table>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        var $modalEditForm = $("#modalEditForm");
+        $modalEditForm.on('hidden.bs.modal', function (e) {
+            $modalBody = $("#modal-body");
+            $modalBody.children().remove();
+        });
+
+        function performAction(e) {
+            switch ($(e).data("action")) {
+                case "create":
+                    $("#modal-body").load('@Url.Action("create", "car")');
+                    break;
+                case "edit":
+                    var id = $(e).data("value");
+                    $("#modal-body").load('@Url.Action("edit", "car")/' + id);
+                    break;
+                case "delete":
+                    var id = $(e).data("value");
+                    $("#modal-body").load('@Url.Action("delete", "car")/' + id);
+                    break;
+            }
+
+            var id = $(e).data("value");
+
+        }
+
+        function getCars() {
+            var $tableBody = $("#cars-table tbody");
+
+            $tableBody.children().remove();
+
+            $.ajax({
+                method: "GET",
+                url: "@Url.Action("getcars", "cars")",
+                success: function (response) {
+
+                    response.forEach(item => {
+                        $tableBody.append('<tr><td hidden>' + item.id + '</td>' +
+                            '<td>' + item.model + '</td>' +
+                            '<td>' + item.description + '</td>' +
+                            '<td>' + item.year + '</td>' +
+                            '<td>' + item.brand + '</td>' +
+                            '<td>' + item.kilometers + '</td>' +
+                            '<td>' + item.price + '</td>' +
+                            '<td>' +
+                            '<button type="button" class="btn btn-link" data-action="edit" data-value="' + item.id + '" data-toggle="modal" data-target="#modalEditForm" onclick="performAction(this)">Edit</button> ' +
+                            '<button type="button" class="btn btn-link text-danger" data-action="delete" data-value="' + item.id + '" data-toggle="modal" data-target="#modalEditForm" onclick="performAction(this)">Delete</button>' +
+                            '</td > </tr > ');
+                    });
+
+                },
+                error: function (error) { }
+            });
+
+        }
+
+
+        $(document).ready(function () {
+            getCars();
+        });
+    </script>
+
+} 

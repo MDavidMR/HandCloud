@@ -10,7 +10,7 @@ namespace HandCloud.WebApp.Models
     public class Car
     {
         [Key]
-        [HiddenInput(DisplayValue = false)]
+        [HiddenInput(DisplayValue = true)]
         public int Id { get; set; }
 
         [Required]
@@ -21,7 +21,7 @@ namespace HandCloud.WebApp.Models
         [MaxLength(100, ErrorMessage = "{0} can only contain {1} characters.")]
         public string Description { get; set; }
 
-        [Range(0, 9000, ErrorMessage = "{0} must be greater than {1} and less than {0}.")]
+        [Range(0, 9000, ErrorMessage = "{0} must be greater than {1} and less than {2}.")]
         public int Year { get; set; }
 
         [Required]
@@ -29,11 +29,12 @@ namespace HandCloud.WebApp.Models
         public string Brand { get; set; }
 
         [Required]
-        [Range(0, 1000000, ErrorMessage = "{0} must be greater than {1} and less than {0}.")]
+        [Range(0, 1000000, ErrorMessage = "{0} must be greater than {1} and less than {2}.")]
         public int Kilometers { get; set; }
 
         [Required]
-        [Range(0, 10000000, ErrorMessage = "{0} must be greater than {1} and less than {0}.")]
+        [Range(0, 10000000, ErrorMessage = "{0} must be greater than {1} and less than {2}.")]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
     }

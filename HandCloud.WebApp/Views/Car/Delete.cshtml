@@ -1,62 +1,100 @@
 ﻿@model HandCloud.WebApp.Models.Car
 
 @{
-    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_PartialLayout.cshtml";
 }
 
-<h1>Delete</h1>
+<h4>Delete Car</h4>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Car</h4>
+<h4>Are you sure you want to delete this?</h4>
+<div id="detail-content" data-value="@Html.DisplayFor(model=>model.Id)">
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2" hidden>
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10" hidden>
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Model)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Model)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Year)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Year)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Brand)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Brand)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Kilometers)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Kilometers)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+    @*<form asp-action="Delete">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </form>*@
+
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-2">
+            <div class="form-group">
+                <input id="btnRemoveCancel" class="btn btn-secondary btn-block" data-dismiss="modal" type="button" value="Cancel" />
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <input id="btnDelete" type="button" value="Delete" class="btn btn-danger btn-block" />
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $("#btnDelete").click(function () {
+            var url = "@Url.Action("remove", "cars")";
+            var data = { id: $("#detail-content").data("value")};
+            $.ajax({
+                method: "POST",
+                url: url,
+                data: data,
+                success: function (response) {
+                    var $btnRemoveCancel = $("#btnRemoveCancel");
+                    $btnRemoveCancel.click();
+                    getCars();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+            });
+    </script>
+}

@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HandCloud.WebApp.Models;
 using HandCloud.WebApp.Services;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Routing;
+using System.Text.RegularExpressions;
+using System.Net;
 
 namespace HandCloud.WebApp.Controllers
 {
@@ -16,21 +20,42 @@ namespace HandCloud.WebApp.Controllers
     {
         private readonly ILogger<CarController> _logger;
         private readonly ICarServices _carServices;
-        //ICarsRepository _carsRepository;
 
 
         public CarController(ICarServices carServices, ILogger<CarController> logger)
         {
             _carServices = carServices;
-            //_carsRepository = carsRepository;
             _logger = logger;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("cars/getcars")]
+        public JsonResult GetCars()
+        {
             var cars = _carServices.GetAll();
-            return View(cars);
+            return Json(cars);
+        }
+
+        [HttpGet]
+        [Route("cars/getcar")]
+        public JsonResult GetCar(int id)
+        {
+            var car = _carServices.Get(id);
+            return Json(car);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult Modal()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -40,38 +65,75 @@ namespace HandCloud.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Car car)
+        [Route("cars/add")]
+        public IActionResult Add(Car car)
         {
-            _carServices.Add(car);
 
-            return RedirectToAction("Index");
+            try
+            {
+
+                if (!ModelState.IsValid)
+                    return StatusCode((int)HttpStatusCode.BadRequest);
+
+                _carServices.Add(car);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var car = _carServices.Get(id);
+
+            return View(car);
+        }
+
+        [HttpPost]
+        [Route("cars/update")]
+        public IActionResult Update(Car car)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return StatusCode((int)HttpStatusCode.BadRequest);
+
+                _carServices.Update(car);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+
+
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Delete(int id)
         {
-            return View();
+            var car = _carServices.Get(id);
+            return View(car);
         }
 
-        [HttpPut]
-        public IActionResult Edit(Car car)
+        [HttpPost]
+        [Route("cars/remove")]
+        public IActionResult Remove(int id)
         {
-            _carServices.Update(car);
-            return RedirectToAction("Index");
+            try
+            {
+                _carServices.Remove(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
 
-        }
-
-        [HttpGet]
-        public IActionResult Delete()
-        {
-            return View();
-        }
-
-        [HttpDelete]
-        public IActionResult Delete(Car car)
-        {
-            _carServices.Remove(car.Id);
-            return RedirectToAction("Index");
         }
 
     }
