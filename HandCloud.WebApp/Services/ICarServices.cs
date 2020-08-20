@@ -8,14 +8,14 @@ namespace HandCloud.WebApp.Services
 {
     public interface ICarServices
     {
-        Car Get(int id);
+        Task<Car> Get(int id);
 
-        List<Car> GetAll();
+        Task<List<Car>> GetAll();
 
-        void Add(Car car);
+        Task Add(Car car);
 
-        void Update(Car car);
+        Task Update(Car car);
 
-        void Remove(int id);
+        Task Remove(int id);
     }
 }

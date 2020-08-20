@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace HandCloud.Repository.Helpers
 {
@@ -21,24 +23,29 @@ namespace HandCloud.Repository.Helpers
             }
         }
 
-        public List<T> GetData<T>()
+        public async Task<List<T>> GetData<T>()
         {
+            IEnumerable<T> data = null;
+            string json;
             using (StreamReader file = File.OpenText(_path))
-            using (JsonTextReader reader = new JsonTextReader(file))
             {
-                var serializer = new JsonSerializer();
-                var data = serializer.Deserialize<IEnumerable<T>>(reader);
-                if (data != null)
-                    return data.ToList();
-                else
-                    return null;
+                json = await file.ReadToEndAsync();
+                data = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
             }
+
+            if (data != null)
+                return data.ToList();
+            else
+                return null;
+
         }
 
-        public void SaveData<T>(T data)
+
+        public async Task SaveData<T>(T data)
         {
             var json = JsonConvert.SerializeObject(data, Formatting.None);
-            File.WriteAllText(_path, json);
+            await File.WriteAllTextAsync(_path, json);
+
         }
     }
 }

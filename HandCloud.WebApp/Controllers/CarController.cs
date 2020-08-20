@@ -36,17 +36,17 @@ namespace HandCloud.WebApp.Controllers
 
         [HttpGet]
         [Route("cars/getcars")]
-        public JsonResult GetCars()
+        public async Task<JsonResult> GetCars()
         {
-            var cars = _carServices.GetAll();
+            var cars = await _carServices.GetAll();
             return Json(cars);
         }
 
         [HttpGet]
         [Route("cars/getcar")]
-        public JsonResult GetCar(int id)
+        public async Task<JsonResult> GetCar(int id)
         {
-            var car = _carServices.Get(id);
+            var car = await _carServices.Get(id);
             return Json(car);
         }
 
@@ -66,7 +66,7 @@ namespace HandCloud.WebApp.Controllers
 
         [HttpPost]
         [Route("cars/add")]
-        public IActionResult Add(Car car)
+        public async Task<IActionResult> Add(Car car)
         {
 
             try
@@ -75,7 +75,7 @@ namespace HandCloud.WebApp.Controllers
                 if (!ModelState.IsValid)
                     return StatusCode((int)HttpStatusCode.BadRequest);
 
-                _carServices.Add(car);
+                await _carServices.Add(car);
                 return Ok();
             }
             catch (Exception)
@@ -86,23 +86,23 @@ namespace HandCloud.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var car = _carServices.Get(id);
+            var car = await _carServices.Get(id);
 
             return View(car);
         }
 
         [HttpPost]
         [Route("cars/update")]
-        public IActionResult Update(Car car)
+        public async Task<IActionResult> Update(Car car)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return StatusCode((int)HttpStatusCode.BadRequest);
 
-                _carServices.Update(car);
+                await _carServices.Update(car);
                 return Ok();
             }
             catch (Exception)
@@ -114,19 +114,19 @@ namespace HandCloud.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var car = _carServices.Get(id);
+            var car = await _carServices.Get(id);
             return View(car);
         }
 
         [HttpPost]
         [Route("cars/remove")]
-        public IActionResult Remove(int id)
+        public async Task<IActionResult> Remove(int id)
         {
             try
             {
-                _carServices.Remove(id);
+                await _carServices.Remove(id);
                 return Ok();
             }
             catch (Exception)

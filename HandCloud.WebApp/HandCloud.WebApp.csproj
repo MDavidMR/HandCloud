@@ -6,20 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Home\**" />
-    <Content Remove="Views\Home\**" />
-    <EmbeddedResource Remove="Views\Home\**" />
-    <None Remove="Views\Home\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
-    <Compile Remove="Models\ErrorViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\Error.cshtml" />
-    <Content Remove="Views\_ViewImports.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

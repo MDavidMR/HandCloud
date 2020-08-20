@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using HandCloud.Domain;
 
 namespace HandCloud.Repository
 {
     public interface ICarsRepository
     {
-        Car Get(int id);
-        
-        List<Car> GetAll();
+        Task<Car> Get(int id);
 
-        void Add(Car car);
+        Task<List<Car>> GetAll();
 
-        void Update(Car car);
+        Task Add(Car car);
 
-        void Remove(int id);
-        
+        Task Update(Car car);
+
+        Task Remove(int id);
+
     }
 }

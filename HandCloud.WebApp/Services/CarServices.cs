@@ -19,31 +19,31 @@ namespace HandCloud.WebApp.Services
             _mapper = mapper;
         }
 
-        public void Add(Car car)
+        public async Task Add(Car car)
         {
-            _carsRepository.Add(_mapper.Map<Domain.Car>(car));
+            await _carsRepository.Add(_mapper.Map<Domain.Car>(car));
         }
 
-        public Car Get(int id)
+        public async Task<Car> Get(int id)
         {
-            return _mapper.Map<Car>(_carsRepository.Get(id));
+            return _mapper.Map<Car>(await _carsRepository.Get(id));
         }
 
-        public List<Car> GetAll()
+        public async Task<List<Car>> GetAll()
         {
-            var cars = _carsRepository.GetAll();
+            var cars = await _carsRepository.GetAll();
             return _mapper.Map<List<Car>>(cars);
 
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
-            _carsRepository.Remove(id);
+            await _carsRepository.Remove(id);
         }
 
-        public void Update(Car car)
+        public async Task Update(Car car)
         {
-            _carsRepository.Update(_mapper.Map<Domain.Car>(car));
+            await _carsRepository.Update(_mapper.Map<Domain.Car>(car));
         }
     }
 }
